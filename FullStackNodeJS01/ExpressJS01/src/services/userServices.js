@@ -57,10 +57,13 @@ const getUserService = async () => {
   }
 };
 
-const forgotPasswordService = async (email, newPassword) => {
+const forgotPasswordService = async (email, oldPassword, newPassword) => {
   try {
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) return { EC: 1, EM: "Email không tồn tại trong hệ thống" };
+
+    const isMatchPassword = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatchPassword) return { EC: 2, EM: "Mật khẩu cũ không chính xác" };
 
     const hashPassword = await bcrypt.hash(newPassword, saltRounds);
 

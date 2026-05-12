@@ -23,8 +23,8 @@ const getAccount = async (req, res) => {
   return res.status(200).json(req.user);
 };
 const handleForgotPassword = async (req, res) => {
-  const { email, newPassword } = req.body;
-  const data = await forgotPasswordService(email, newPassword);
+  const { email, oldPassword, newPassword } = req.body;
+  const data = await forgotPasswordService(email, oldPassword, newPassword);
   return res.status(200).json(data);
 };
 
