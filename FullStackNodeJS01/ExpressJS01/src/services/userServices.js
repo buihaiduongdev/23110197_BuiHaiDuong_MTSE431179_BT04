@@ -5,14 +5,14 @@ const jwt = require("jsonwebtoken");
 
 const saltRounds = 10;
 
-const createUserService = async (name, email, password) => {
+const createUserService = async (name, email, password, role = "User") => {
   try {
     const userExists = await prisma.user.findUnique({ where: { email } });
     if (userExists) return { EC: 1, EM: "Email đã tồn tại!" };
 
     const hashPassword = await bcrypt.hash(password, saltRounds);
     await prisma.user.create({
-      data: { name, email, password: hashPassword, role: "User" },
+      data: { name, email, password: hashPassword, role: role || "User" },
     });
     return { EC: 0, EM: "Đăng ký thành công" };
   } catch (error) {

@@ -6,7 +6,7 @@ const {
   getAccount,
   handleForgotPassword,
 } = require("../controllers/userController");
-const { getProducts } = require("../controllers/productController");
+const { getProducts, getProductDetail, seedProducts } = require("../controllers/productController");
 const auth = require("../middleware/auth");
 const delay = require("../middleware/delay");
 
@@ -18,6 +18,8 @@ routerAPI.post("/login", handleLogin);
 routerAPI.get("/user", auth, getUser);
 routerAPI.get("/account", delay, auth, getAccount);
 routerAPI.get("/products", getProducts);
+routerAPI.get("/products/:id", getProductDetail);
+routerAPI.post("/seed-products", seedProducts);
 routerAPI.post("/forgot-password", handleForgotPassword);
 
 module.exports = routerAPI;

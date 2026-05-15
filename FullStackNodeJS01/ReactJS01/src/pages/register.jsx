@@ -1,12 +1,12 @@
-import { Button, Col, Form, Input, notification, Row } from "antd";
+import { Button, Col, Form, Input, notification, Row, Select } from "antd";
 import { createUserApi } from "../util/api";
 import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
   const onFinish = async (values) => {
-    const { name, email, password } = values;
-    const res = await createUserApi(name, email, password);
+    const { name, email, password, role } = values;
+    const res = await createUserApi(name, email, password, role);
     if (res && res.EC === 0) {
       notification.success({ message: "Thành công", description: res.EM });
       navigate("/login");
@@ -20,7 +20,7 @@ const RegisterPage = () => {
       <Col xs={24} md={16} lg={8}>
         <fieldset style={{ padding: "15px", border: "1px solid #ccc" }}>
           <legend>Đăng Ký Tài Khoản</legend>
-          <Form layout="vertical" onFinish={onFinish}>
+          <Form layout="vertical" onFinish={onFinish} initialValues={{ role: "User" }}>
             <Form.Item
               label={<span style={{ color: "#ccc" }}>Họ và tên</span>}
               name="name"
@@ -41,6 +41,16 @@ const RegisterPage = () => {
               rules={[{ required: true }]}
             >
               <Input.Password />
+            </Form.Item>
+            <Form.Item
+              label={<span style={{ color: "#ccc" }}>Vai trò</span>}
+              name="role"
+              rules={[{ required: true }]}
+            >
+              <Select>
+                <Select.Option value="User">User</Select.Option>
+                <Select.Option value="Admin">Admin</Select.Option>
+              </Select>
             </Form.Item>
             <Button type="primary" htmlType="submit">
               Đăng ký

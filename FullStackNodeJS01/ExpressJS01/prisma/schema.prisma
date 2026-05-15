@@ -21,13 +21,22 @@ model User {
   role     String  @default("User")
 }
 
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products Product[]
+}
+
 model Product {
   id          Int      @id @default(autoincrement())
   name        String
   price       Float
-  description String?
-  image       String?
-  category    String?
+  description String?  @db.Text
+  images      Json?    
+  stock       Int      @default(0)
+  sold        Int      @default(0)
+  categoryId  Int?
+  category    Category? @relation(fields: [categoryId], references: [id])
   isNew       Boolean  @default(false)
   isHot       Boolean  @default(false)
   createdAt   DateTime @default(now())
