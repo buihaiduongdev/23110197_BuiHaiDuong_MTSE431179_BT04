@@ -16,7 +16,7 @@ npm install
 
 # 2. Setup file .env
 # PORT=8080
-# DATABASE_URL="mysql://root:1122cauvanG%21@localhost:3306/fullstack02"
+# DATABASE_URL="mysql://root:password123!@localhost:3306/fullstack02"
 # JWT_SECRET=sercretkey_cua_duong
 # JWT_EXPIRE=1h
 
